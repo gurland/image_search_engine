@@ -25,6 +25,8 @@ services:
       - ./images:/data/images
     ports:
       - "5555:5000"
+    depends_on:
+      - db
 
   frontend:
     image: milvusbootcamp/img-search-server:2.0
@@ -32,6 +34,8 @@ services:
       - "80:80"
     environment:
       API_URL: "http://reverse_image_search:5555"
+    depends_on:
+      - reverse_image_search
 
   etcd:
     container_name: milvus-etcd

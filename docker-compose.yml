@@ -18,7 +18,7 @@ services:
     image: milvusbootcamp/img-search-server:2.0
     environment:
       DATAPATH1: "/data/images"
-      MILVUS_HOST: standalone
+      MILVUS_HOST: milvus-standalone
       MILVUS_PORT: 19530
       MYSQL_HOST: db
     volumes:

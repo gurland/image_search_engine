@@ -27,7 +27,7 @@ services:
       - "5555:5000"
     depends_on:
       - db
-      - standalone
+      - milvus-standalone
 
   frontend:
     image: milvusbootcamp/img-search-client:1.0

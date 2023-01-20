@@ -29,7 +29,7 @@ services:
       - db
 
   frontend:
-    image: milvusbootcamp/img-search-server:2.0
+    image: milvusbootcamp/img-search-client
     ports:
       - "80:80"
     environment:

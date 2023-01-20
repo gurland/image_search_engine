@@ -33,7 +33,7 @@ services:
     ports:
       - "80:80"
     environment:
-      API_URL: "http://reverse_image_search:5555"
+      API_URL: "http://23.88.117.114:5555"
     depends_on:
       - reverse_image_search
 

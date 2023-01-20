@@ -19,7 +19,7 @@ services:
     environment:
       DATAPATH1: "/data/images"
       MILVUS_HOST: milvus-standalone
-      MILVUS_PORT: 19530
+      MILVUS_PORT: 9091
       MYSQL_HOST: db
     volumes:
       - ./images:/data/images

@@ -1,6 +1,23 @@
 version: '3.5'
 
 services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+
+  images_api:
+    build: images_api
+    volumes:
+      - ./images_api/src:/app
+    environment:
+      PG_HOST: "db"
+    ports:
+      - 80:80
+
   qdrant:
     image: qdrant/qdrant
     volumes:

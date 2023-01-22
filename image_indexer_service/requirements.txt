@@ -1,8 +1,0 @@
-flask
-peewee
-qdrant-client
-tensorflow
-tensorflow-io
-Pillow
-numpy
-keras

@@ -1,17 +1,19 @@
-import numpy as np
-from numpy.linalg import norm
-import pickle
-import os
-import time
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
-import requests
-import PIL
+import uuid
 from io import BytesIO
 from time import sleep
+
+import numpy as np
+import PIL
+import requests
+from numpy.linalg import norm
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
-import uuid
+from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+from tensorflow.keras.preprocessing import image
+
+from cfg import QDRANT_HOST
+from models import IndexedImage, fn
+
 
 URL = "http://olidawiki.s3-website.eu-central-1.amazonaws.com/c676eba0-78ee-42f4-a48c-758cdb77a5f8.jpg"
 
@@ -31,12 +33,6 @@ def extract_features(img_url):
     normalized_features = flattened_features / norm(flattened_features)
     return normalized_features
 
-features = extract_features("http://olidawiki.s3-website.eu-central-1.amazonaws.com/3295f28c-b5c7-4437-b6c0-79efc55f5c44.jpg", model)
-
-print(features)
-
-BASE_API_URL = os.getenv("BASE_API_URL", "http://images_api:80/api")
-QDRANT_HOST = os.getenv("QDRANT_HOST", "http://images_api:80/api")
 
 client = QdrantClient(host=QDRANT_HOST, port=6333)
 
@@ -50,7 +46,7 @@ except Exception as e:
     )
 
 
-def add_image_to_index(image_url):
+def add_image_to_index(image_url, metadata):
     features = extract_features(image_url)
 
     try:
@@ -68,10 +64,9 @@ def add_image_to_index(image_url):
         ]
     )
 
-    # TODO: PUT BASE_API_URL/index | image_url | success | inserted_id
-
-
-if __name__ == '__main__':
-    while True:
-        requests.get()
-        sleep(1)
+    return IndexedImage.create(
+        url=image_url,
+        qdrant_id=point_id,
+        metadata=metadata,
+        fts_search_index=fn.to_tsvector(metadata),
+    )

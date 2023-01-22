@@ -9,7 +9,8 @@ services:
       - "6333:6333"
 
   tensorflow-jupyter:
-    image: tensorflow/tensorflow:nightly-jupyter
+    platform: linux/arm64/v8
+    build: images_api
     volumes:
       - ./src:/tf
     ports:

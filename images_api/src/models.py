@@ -12,5 +12,5 @@ class BaseModel(Model):
 
 class IndexedImage(BaseModel):
     url = CharField(unique=True)
+    qdrant_id = CharField()
     is_indexed = BooleanField(default=False)
-

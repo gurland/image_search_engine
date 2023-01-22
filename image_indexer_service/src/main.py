@@ -68,6 +68,8 @@ def add_image_to_index(image_url):
         ]
     )
 
+    # TODO: PUT BASE_API_URL/index | image_url | success | inserted_id
+
 
 if __name__ == '__main__':
     while True:

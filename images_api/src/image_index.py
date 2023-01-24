@@ -6,13 +6,9 @@ import numpy as np
 import PIL
 import requests
 from numpy.linalg import norm
-from qdrant_client import QdrantClient
-from qdrant_client.http import models
+
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 from tensorflow.keras.preprocessing import image
-
-from cfg import QDRANT_HOST
-from models import IndexedImage, fn
 
 
 URL = "http://olidawiki.s3-website.eu-central-1.amazonaws.com/c676eba0-78ee-42f4-a48c-758cdb77a5f8.jpg"
@@ -34,18 +30,6 @@ def extract_features(img_url):
     return normalized_features
 
 
-client = QdrantClient(host=QDRANT_HOST, port=6333)
-
-
-try:
-    client.get_collection(collection_name="images_collection")
-except Exception as e:
-    client.recreate_collection(
-        collection_name="images_collection",
-        vectors_config=models.VectorParams(size=2048, distance=models.Distance.COSINE),
-    )
-
-
 def add_image_to_index(image_url, metadata):
     features = extract_features(image_url)
 
@@ -64,9 +48,4 @@ def add_image_to_index(image_url, metadata):
         ]
     )
 
-    return IndexedImage.create(
-        url=image_url,
-        qdrant_id=point_id,
-        metadata=metadata,
-        fts_search_index=fn.to_tsvector(metadata),
-    )
+    return

@@ -6,3 +6,4 @@ tensorflow-io
 Pillow
 numpy
 keras
+flask-cors

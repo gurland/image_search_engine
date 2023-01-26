@@ -1,8 +1,10 @@
 from flask import Flask, request, send_from_directory
+from flask_cors import CORS
 from db import add_image_to_index, search_image
 from feature_extraction import extract_features
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/api")

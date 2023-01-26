@@ -33,9 +33,6 @@ def search_simmilar_images():
     image_url = payload.get("url")
     metadata = payload.get("metadata")
 
-    if not image_url:
-        return {"message": "No url provided"}, 400
-
     try:
         features = None
         if image_url:

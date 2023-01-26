@@ -6,9 +6,13 @@ services:
     volumes:
       - ./images_api/src:/app
     environment:
-      PG_HOST: "db"
+      QDRANT_HOST: qdrant
+      QDRANT_COLLECTION_NAME: images_collection
+
     ports:
       - 80:80
+    depends_on:
+      - qdrant
 
   qdrant:
     image: qdrant/qdrant

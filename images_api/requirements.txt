@@ -7,3 +7,6 @@ Pillow
 numpy
 keras
 flask-cors
+tensorflow-hub
+matplotlib
+opencv-python

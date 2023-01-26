@@ -1,7 +1,8 @@
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, send_file
 from flask_cors import CORS
 from db import add_image_to_index, search_image
 from feature_extraction import extract_features
+from object_detection import run_detector
 
 app = Flask(__name__)
 CORS(app)
@@ -41,6 +42,19 @@ def search_simmilar_images():
             features = extract_features(image_url)
 
         return search_image(features, metadata)
+    except Exception as e:
+        return {"message": str(e)}, 400
+
+
+@app.route('/api/images/detect', methods=["POST"])
+def search_simmilar_images():
+    image_url = request.get_json().get("url")
+    if not image_url:
+        return {"message": "url not provided error"}, 400
+
+    try:
+        filepath = run_detector(image_url)
+        return send_file(filepath, mimetype="image/jpg")
     except Exception as e:
         return {"message": str(e)}, 400
 

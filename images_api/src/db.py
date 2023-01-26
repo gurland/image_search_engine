@@ -34,7 +34,7 @@ def setup_qdrant():
 
 def search_image(image_features_vector: Optional[List[float]], metadata: str):
     if image_features_vector is not None:
-        result, _ = qdrant_client.search(
+        result = qdrant_client.search(
             collection_name=QDRANT_COLLECTION_NAME,
             limit=20,
             query_vector=image_features_vector
@@ -54,7 +54,7 @@ def search_image(image_features_vector: Optional[List[float]], metadata: str):
             )
         )
 
-    return [record.json() for record in result]
+    return [record.dict() for record in result]
 
 
 def add_image_to_index(features: List[float], image_url: str, metadata: str):
@@ -77,3 +77,6 @@ def add_image_to_index(features: List[float], image_url: str, metadata: str):
             ),
         ]
     )
+
+
+setup_qdrant()

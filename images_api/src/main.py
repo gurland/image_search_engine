@@ -1,6 +1,6 @@
 from flask import Flask, request, send_from_directory
-from models import IndexedImage
-from image_index import add_image_to_index
+from db import add_image_to_index, search_image
+from feature_extraction import extract_features
 
 app = Flask(__name__)
 
@@ -10,37 +10,38 @@ def heartbeat():
     return {"message": "Api is running"}
 
 
-@app.route('/api/images/<string:qdrant_id>')
-def get_image_by_qdrant_id(qdrant_id):
-    try:
-        return IndexedImage.get(qdrant_id=qdrant_id).to_dict()
-    except Exception as e:
-        return {"message": str(e)}, 400
-
-
 @app.route('/api/images', methods=["POST"])
 def post_image_to_index():
     payload = request.get_json()
     image_url = payload.get("url")
+
     if not image_url:
         return {"message": "No url provided"}, 400
 
     try:
-        added_image = add_image_to_index(image_url, payload.get("metadata", ""))
-        return added_image.to_dict()
+        features = extract_features(image_url)
+        add_image_to_index(features, image_url, payload.get("metadata", ""))
+        return {"message": "successs"}
     except Exception as e:
         return {"message": str(e)}, 400
 
 
 @app.route('/api/images/search', methods=["POST"])
 def search_simmilar_images():
-    image_url = request.get_json().get("url")
+    payload = request.get_json()
+
+    image_url = payload.get("url")
+    metadata = payload.get("metadata")
+
     if not image_url:
         return {"message": "No url provided"}, 400
 
     try:
-        added_image = add_image_to_index(image_url, payload.get("metadata", ""))
-        return added_image.to_dict()
+        features = None
+        if image_url:
+            features = extract_features(image_url)
+
+        return search_image(features, metadata)
     except Exception as e:
         return {"message": str(e)}, 400
 

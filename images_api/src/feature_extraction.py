@@ -1,6 +1,4 @@
-import uuid
 from io import BytesIO
-from time import sleep
 
 import numpy as np
 import PIL
@@ -10,8 +8,6 @@ from numpy.linalg import norm
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 from tensorflow.keras.preprocessing import image
 
-
-URL = "http://olidawiki.s3-website.eu-central-1.amazonaws.com/c676eba0-78ee-42f4-a48c-758cdb77a5f8.jpg"
 
 MODEL = ResNet50(weights='imagenet', include_top=False,
                  input_shape=(224, 224, 3), pooling='avg')

@@ -6,4 +6,4 @@ PG_HOST = os.getenv("PG_HOST", "localhost")
 PG_DB = os.getenv("PG_DB", "postgres")
 
 QDRANT_HOST = os.getenv("QDRANT_HOST", "qdrant")
-QDRANT_COLLECTION = os.getenv("QDRANT_COLLECTION", "images_collection")
+QDRANT_COLLECTION_NAME = os.getenv("QDRANT_COLLECTION_NAME", "images_collection")

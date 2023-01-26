@@ -46,8 +46,8 @@ def search_simmilar_images():
         return {"message": str(e)}, 400
 
 
-@app.route('/api/images/detect', methods=["POST"])
-def search_simmilar_images():
+@app.route('/api/images/object_detection', methods=["POST"])
+def run_object_detection():
     image_url = request.get_json().get("url")
     if not image_url:
         return {"message": "url not provided error"}, 400

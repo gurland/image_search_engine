@@ -25,10 +25,10 @@ services:
     ports:
       - "6333:6333"
 
-  tensorflow-jupyter:
-    platform: linux/arm64/v8
-    build: images_api
-    volumes:
-      - ./src:/tf
-    ports:
-      - "8888:8888"
+#  tensorflow-jupyter:
+#    platform: linux/arm64/v8
+#    build: images_api
+#    volumes:
+#      - ./src:/tf
+#    ports:
+#      - "8888:8888"

@@ -1,3 +1,5 @@
+from typing import List
+
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 
@@ -28,3 +30,27 @@ def setup_qdrant(client):
         )
     )
 
+
+def search_image(image_features_vector):
+    pass
+
+
+def add_image_to_index(features: List[float], image_id: str, metadata: str):
+    client.upsert(
+        collection_name=QDRANT_COLLECTION,
+        points=[
+            models.PointStruct(
+                id=point_id,
+                vector=features.tolist(),
+            ),
+        ]
+    )
+
+    return
+
+#
+#
+# try:
+#     point_id = image_url.split("/")[-1].split(".jpg")[0]
+# except:
+#     point_id = str(uuid.uuid4())

@@ -17,7 +17,7 @@ MODEL = ResNet50(weights='imagenet', include_top=False,
                  input_shape=(224, 224, 3), pooling='avg')
 
 
-def extract_features(img_url):
+def extract_features(img_url: str) -> list:
     r = requests.get(img_url)
     img = PIL.Image.open(BytesIO(r.content)).resize((224, 224)).convert("RGB")
 
@@ -27,25 +27,5 @@ def extract_features(img_url):
     features = MODEL.predict(preprocessed_img)
     flattened_features = features.flatten()
     normalized_features = flattened_features / norm(flattened_features)
-    return normalized_features
 
-
-def add_image_to_index(image_url, metadata):
-    features = extract_features(image_url)
-
-    try:
-        point_id = image_url.split("/")[-1].split(".jpg")[0]
-    except:
-        point_id = str(uuid.uuid4())
-
-    client.upsert(
-        collection_name="images_collection",
-        points=[
-            models.PointStruct(
-                id=point_id,
-                vector=features.tolist(),
-            ),
-        ]
-    )
-
-    return
+    return normalized_features.tolist()

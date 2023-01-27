@@ -26,7 +26,7 @@ function Header() {
     });
 
     setImages(res2.data);
-  }, [img]);
+  }, [img, metaSearch]);
 
   const handleUpload = React.useCallback(async () => {
     const formData = new FormData();

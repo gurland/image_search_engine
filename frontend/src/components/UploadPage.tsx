@@ -11,6 +11,7 @@ function Header() {
   const [images, setImages] = React.useState([]);
   const [metaSearch, setMetaSearch] = React.useState("");
   const [imgToUpload, setImgToUpload] = React.useState(null);
+  const [metaToUpload, setMetaToUpload] = React.useState("");
 
   const handleSubmit = React.useCallback(async () => {
     const formData = new FormData();
@@ -38,8 +39,11 @@ function Header() {
       imgToUpload
     );
 
+    alert(metaToUpload);
+
     const res3 = await axios.post("http://23.88.117.114/api/images", {
       url: res.data.url,
+      metadata: metaToUpload
     });
 
     // const res2 = await axios.post("http://23.88.117.114/api/images/search", {
@@ -47,8 +51,9 @@ function Header() {
     // });
 
     alert("Added successful");
-  }, [imgToUpload]);
+  }, [imgToUpload, metaToUpload]);
 
+  // @ts-ignore
   return (
     <div>
       <div
@@ -64,6 +69,17 @@ function Header() {
         // @ts-ignore
         onChange={(e) => setImgToUpload(e.target.files[0])}
       />
+        <br/>
+
+        <TextField
+          style={{ marginTop: "20px" }}
+          size="small"
+          variant="outlined"
+          label="Metedata (optional)"
+          // @ts-ignore
+          onChange={(e) => {setMetaToUpload(e.target.value);}}
+        />
+
 
       <Button onClick={handleUpload} variant="contained" className="upload-btn">
         Upload

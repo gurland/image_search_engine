@@ -1,7 +1,7 @@
 import "./index.css";
 import axios from "axios";
 import React from "react";
-import { Button, Input, TextField } from "@mui/material";
+import {Button, CircularProgress, Input, TextField} from "@mui/material";
 import { Context } from "./SearchEngine";
 import Images from "./Images";
 
@@ -11,10 +11,14 @@ function Header() {
   const [images, setImages] = React.useState([]);
   const [metaSearch, setMetaSearch] = React.useState("");
   const [imgToUpload, setImgToUpload] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+
 
   const [ss, setSS] = React.useState(null);
 
   const handleSubmit = React.useCallback(async () => {
+    setLoading(true);
+
     const formData = new FormData();
     if (!img) return;
 
@@ -30,6 +34,7 @@ function Header() {
       },
       { responseType: "blob" }
     );
+    setLoading(false);
 
     console.log(res2);
 
@@ -61,20 +66,22 @@ function Header() {
   return (
     <div className="header-wrapper">
       <div className="wrap-wrap">
-        <Input
-          hidden
-          type="file"
-          // @ts-ignore
-          onChange={(e) => setImg(e.target.files[0])}
-        />
+        {loading ? (
+        <CircularProgress />
+      ) : (
+          <><Input
+            hidden
+            type="file"
+            // @ts-ignore
+            onChange={(e) => setImg(e.target.files[0])}/><Button
+            onClick={handleSubmit}
+            variant="contained"
+            className="upload-btn"
+          >
+            Search
+          </Button></>
+      )}
 
-        <Button
-          onClick={handleSubmit}
-          variant="contained"
-          className="upload-btn"
-        >
-          Search
-        </Button>
       </div>
 
       {ss && (

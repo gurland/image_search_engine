@@ -90,8 +90,8 @@ def draw_boxes(image, boxes, class_names, scores, max_boxes=10, min_score=0.1):
     colors = list(ImageColor.colormap.values())
 
     try:
-        font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Regular.ttf",
-                                  25)
+        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+                                  24)
     except IOError:
         print("Font not found, using default font.")
         font = ImageFont.load_default()

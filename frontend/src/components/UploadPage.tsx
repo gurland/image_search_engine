@@ -39,8 +39,6 @@ function Header() {
       imgToUpload
     );
 
-    alert(metaToUpload);
-
     const res3 = await axios.post("http://23.88.117.114/api/images", {
       url: res.data.url,
       metadata: metaToUpload

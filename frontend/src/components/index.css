@@ -26,6 +26,7 @@
 
 .img-wrapper {
     display: flex;
+    width: 400px;
     flex-direction: column;
     margin-right: 50px;
 }

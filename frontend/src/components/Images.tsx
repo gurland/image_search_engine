@@ -9,11 +9,18 @@ function Images({ images }: { images: any[] }) {
         return (
           <div className="img-wrapper">
             <img className="img-res" src={imgData.payload.image_url} />
+                        {imgData?.payload?.metadata ? (
+              <p className="similarity-checksum">{imgData.payload.metadata}</p>
+            ) : (
+              <></>
+            )}
+
             {imgData?.score ? (
               <p className="similarity-checksum">Similarity: {imgData.score}</p>
             ) : (
               <></>
             )}
+
           </div>
         );
       })}
